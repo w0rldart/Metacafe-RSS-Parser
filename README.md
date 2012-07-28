@@ -55,6 +55,13 @@ This library is curently in use at http://www.videouri.com and it works great. E
 
 I will write a blog entry with more detailed example usage of the library, so, stay tuned!
 
-Please report your suggestion, bugs, feature requests (https://github.com/w0rldart/codeigniter-metacafe/issues)
-
 You may also find me at http://twitter.com/w0rldart
+
+Contribute
+----------
+
+1. Check for open issues or open a new issue for a feature request or a bug
+2. Fork [the repository][] on Github to start making your changes
+4. Send a pull request
+
+[the repository]: https://github.com/w0rldart/codeigniter-metacafe
