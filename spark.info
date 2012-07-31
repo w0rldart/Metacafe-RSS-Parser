@@ -1,4 +1,4 @@
 name: codeigniter-metacafe
-version: 1.0
+version: 1.0.0
 compatibility: 2.0.0
 tags: ["videos", "metacafe", "rss"]
