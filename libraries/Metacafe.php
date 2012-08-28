@@ -16,8 +16,8 @@
 *
 */
 
-class Metacafe {
-
+class Metacafe
+{
 	const URI_BASE = 'http://www.metacafe.com/';
 
     private $_uris = array(
@@ -34,35 +34,33 @@ class Metacafe {
     	'TODAYS_MOST_VIEWED'				=> 'most_popular/rss.xml',
 
     	//Today’s most recent videos, movies & funny clips by Metacafe.
-    	'TODAYS_MOST_RECENT'				=> 'api/videos/?time=today',
+    	'TODAYS_MOST_RECENT'				=> 'newest/rss.xml',
 
     	//Highest rated videos, movies & funny clips by Metacafe this week/this month/ever.
-        'TOP_VIDEOS_WEEK'		            => 'videos/rss.xml',
-        'TOP_VIDEOS_MONTH'		            => 'videos/month/rss.xml',
-        'TOP_VIDEOS_EVER'		            => 'videos/ever/rss.xml',
+        'TOP_VIDEOS_WEEK'		            => 'top_videos/rss.xml',
+        'TOP_VIDEOS_MONTH'		            => 'top_videos/month/rss.xml',
+        'TOP_VIDEOS_EVER'		            => 'top_videos/ever/rss.xml',
 
         //Recently popular videos, movies & funny clips by Metacafe this week/this month/ever.
-        'TOP_VIDEOS_RECENTLY_POPULAR_WEEK'	=> 'videos/recently_popular/rss.xml',
-        'TOP_VIDEOS_RECENTLY_POPULAR_MONTH'	=> 'videos/recently_popular/month/rss.xml',
-        'TOP_VIDEOS_RECENTLY_POPULAR_EVER'	=> 'videos/recently_popular/ever/rss.xml',
+        'TOP_VIDEOS_RECENTLY_POPULAR_WEEK'	=> 'top_videos/recently_popular/rss.xml',
+        'TOP_VIDEOS_RECENTLY_POPULAR_MONTH'	=> 'top_videos/recently_popular/month/rss.xml',
+        'TOP_VIDEOS_RECENTLY_POPULAR_EVER'	=> 'top_videos/recently_popular/ever/rss.xml',
 
         //Most Interesting videos, movies & funny clips by Metacafe this week/this month/ever.
-        'TOP_VIDEOS_MOST_DISCUSSED_WEEK'	=> 'videos/most_interesting/rss.xml',
-        'TOP_VIDEOS_MOST_DISCUSSED_MONTH'	=> 'videos/most_interesting/month/rss.xml',
-        'TOP_VIDEOS_MOST_DISCUSSED_EVER'	=> 'videos/most_interesting/ever/rss.xml',
+        'TOP_VIDEOS_MOST_DISCUSSED_WEEK'	=> 'top_videos/most_interesting/rss.xml',
+        'TOP_VIDEOS_MOST_DISCUSSED_MONTH'	=> 'top_videos/most_interesting/month/rss.xml',
+        'TOP_VIDEOS_MOST_DISCUSSED_EVER'	=> 'top_videos/most_interesting/ever/rss.xml',
 
         //Most Viewed videos, movies & funny clips by Metacafe this week/this month/ever.
-        'TOP_VIDEOS_MOST_VIEWED_WEEK'		=> 'videos/most_popular/rss.xml',
-        'TOP_VIDEOS_MOST_VIEWED_MONTH'		=> 'videos/most_popular/month/rss.xml',
-        'TOP_VIDEOS_MOST_VIEWED_EVER'		=> 'videos/most_popular/ever/rss.xml',
+        'TOP_VIDEOS_MOST_VIEWED_WEEK'		=> 'top_videos/most_popular/rss.xml',
+        'TOP_VIDEOS_MOST_VIEWED_MONTH'		=> 'top_videos/most_popular/month/rss.xml',
+        'TOP_VIDEOS_MOST_VIEWED_EVER'		=> 'top_videos/most_popular/ever/rss.xml',
 
         //Most Recent videos, movies & funny clips by Metacafe this week/this month/ever.
-        'TOP_VIDEOS_MOST_RECENT_WEEK'		=> 'videos/recent/ever/rss.xml',
-        'TOP_VIDEOS_MOST_RECENT_MONTH'		=> 'videos/recent/ever/rss.xml',
-        'TOP_VIDEOS_MOST_RECENT_EVER'		=> 'videos/recent/ever/rss.xml'
+        'TOP_VIDEOS_MOST_RECENT_WEEK'		=> 'top_videos/newest/rss.xml',
+        'TOP_VIDEOS_MOST_RECENT_MONTH'		=> 'top_videos/newest/month/rss.xml',
+        'TOP_VIDEOS_MOST_RECENT_EVER'		=> 'top_videos/newest/ever/rss.xml'
     );
-
-    public function __construct() {}
 
     /**
      * Executes a request that does not pass data, and returns the response.
@@ -151,27 +149,23 @@ class Metacafe {
 
     public function getItemData($id)
     {
-        return $this->_response_request("/api/item/$id/");
+        return $this->_response_request("/api/item/{$id}}/");
     }
 
     public function getRelatedVideos($id)
     {
         $id = explode('/', $id);
-        return $this->_response_request("/api/$id[0]/related");
+        return $this->_response_request("/api/{$id[0]}/related");
     }
 
     public function getEmbedData($id)
     {
-        $url = "http://www.metacafe.com/fplayer/".$id.".swf";
+        $url = "http://www.metacafe.com/fplayer/{$id}.swf";
         $data = $this->_curl_get($url);
         if($data == "Video does not exist")
-        {
             return $result = '<span style="width: 640px; height: 330px; display: block; margin: 15px auto;"><a id="loadFrame" style="position: relative; top: 165px;" href="http://www.metacafe.com/watch/'.$id.'/">Click to load the video</a></span>';
-        }
         else
-        {
             return $result = $url;
-        }
     }
 	
 	private function _curl_get($url)
@@ -189,5 +183,4 @@ class Metacafe {
 
 		return $output;    
 	}
-	
 }

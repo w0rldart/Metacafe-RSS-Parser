@@ -8,9 +8,8 @@ This library is curently in use at http://www.videouri.com and it works great. E
 
 ## Requirements
 
-1. PHP 5.1+
+1. PHP 5 (configured with cURL enabled)
 2. CodeIgniter 2.0 + (tested only on CI 2.0 and above)
-3. PHP 5 (configured with cURL enabled)
 
 ## Examples
 
