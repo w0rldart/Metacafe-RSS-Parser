@@ -83,46 +83,55 @@ class Metacafe
         	return false;
     }
 
-    public function getTopRatedVideoFeed($case = 'EVER')
+    public function getTopRatedVideoFeed($period = 'ever')
     {
-        switch($case) {
-            case 'WEEK':
+        switch($period) {
+            case 'today':
+                return $this->_response_request("/{$this->_uris['TODAYS_TOP_RATED_VIDEOS']}");
+                break;
+            case 'week':
                 return $this->_response_request("/{$this->_uris['VIDEOS_WEEK']}");
                 break;
-            case 'MONTH':
+            case 'month':
                 return $this->_response_request("/{$this->_uris['VIDEOS_MONTH']}");
                 break;
-            case 'EVER':
+            case 'ever':
                 return $this->_response_request("/{$this->_uris['VIDEOS_EVER']}");
                 break;
         }
     }
     
-    public function getMostViewedVideoFeed($case = 'EVER')
+    public function getMostViewedVideoFeed($period = 'ever')
     {
-        switch($case) {
-            case 'WEEK':
+        switch($period) {
+            case 'today':
+                return $this->_response_request("/{$this->_uris['TODAYS_MOST_VIEWED']}");
+                break;
+            case 'week':
                 return $this->_response_request("/{$this->_uris['VIDEOS_MOST_VIEWED_WEEK']}");
                 break;
-            case 'MONTH':
+            case 'month':
                 return $this->_response_request("/{$this->_uris['VIDEOS_MOST_VIEWED_MONTH']}");
                 break;
-            case 'EVER':
+            case 'ever':
                 return $this->_response_request("/{$this->_uris['VIDEOS_MOST_VIEWED_EVER']}");
                 break;
         }
     }
     
-    public function getMostDiscussedVideoFeed($case = 'EVER')
+    public function getMostDiscussedVideoFeed($period = 'ever')
     {
-        switch($case) {
-            case 'WEEK':
+        switch($period) {
+            case 'today':
+                return $this->_response_request("/{$this->_uris['TODAYS_MOST_DISCUSSED']}");
+                break;
+            case 'week':
                 return $this->_response_request("/{$this->_uris['VIDEOS_MOST_DISCUSSED_WEEK']}");
                 break;
-            case 'MONTH':
+            case 'month':
                 return $this->_response_request("/{$this->_uris['VIDEOS_MOST_DISCUSSED_MONTH']}");
                 break;
-            case 'EVER':
+            case 'ever':
                 return $this->_response_request("/{$this->_uris['VIDEOS_MOST_DISCUSSED_EVER']}");
                 break;
         }
