@@ -1,19 +1,10 @@
-# CodeIgniter-Metacafe
+# What is it?
 
-CodeIgniter-Metacafe is a CodeIgniter library to be used to search and retrieve content from Metacafe.
+This is a PHP library to parse Metacafe's RSS feed (which they always change, and don't offer documentation), and play a bit with it :)
 
 ## Demo usage
 
 This library is curently in use at http://www.videouri.com and it works great. Enjoy
-
-## Requirements
-
-1. PHP 5 (configured with cURL enabled)
-2. CodeIgniter 2.0 + (tested only on CI 2.0 and above)
-
-## Examples
-
-	$this->load->library('metacafe'); 
 
 ### Basic usage
 
@@ -49,12 +40,6 @@ This library is curently in use at http://www.videouri.com and it works great. E
 		break;
 	}
 	
-## Support
-
-I will write a blog entry with more detailed example usage of the library, so, stay tuned!
-
-You may also find me at http://twitter.com/w0rldart
-
 Contribute
 ----------
 
@@ -62,4 +47,4 @@ Contribute
 2. Fork [the repository][] on Github to start making your changes
 4. Send a pull request
 
-[the repository]: https://github.com/w0rldart/codeigniter-metacafe
+[the repository]: https://github.com/w0rldart/metacafe-rss-parser
