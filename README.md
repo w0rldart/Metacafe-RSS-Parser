@@ -10,34 +10,32 @@ This library is curently in use at http://www.videouri.com and it works great. E
 
 	$page = isset($parameters['page']) ? 1 + ($parameters['page']-1) * 10 : 1;
 	
-	switch ($parameters['action'])
-	{
+	switch ($parameters['action']) {
 		case 'newest':
 			$result = $this->metacafe->getMostRecentVideoFeed();
-		break;
+			break;
 		case 'topRated':
 			$result = $this->metacafe->getTopRatedVideoFeed();
-		break;
+			break;
 		case 'mostViewed':
 			$result = $this->metacafe->getMostViewedVideoFeed();
-		break;
-
+			break;
 		/* Search and tags content */
 		case 'search':
 			$result = $this->metacafe->getKeywordVideoFeed($parameters['query'], array('start-index'=>$page, 'max-results' => 10));
-		break;
+			break;
 		case 'tag':
 			$result = $this->metacafe->getTagVideosFeed($parameters['query']);
-		break;
+			break;
 
 		/* Video page with data and related videos */
 		case 'getVideoEntry':
 			//where $id could be (as an example) 304534 from 304534/bmw_m5_brutalllllllllll_drifting
 			$result = $this->metacafe->getItemData($id);
-		break;
+			break;
 		case 'related':
 			$result = $this->metacafe->getRelatedVideos($id);
-		break;
+			break;
 	}
 	
 Contribute
