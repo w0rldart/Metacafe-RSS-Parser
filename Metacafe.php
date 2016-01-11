@@ -1,40 +1,43 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
-*
-* CodeIgniter Metacafe
-*
-* Search and retrieve video content from Metacafe.
-*
-*
-* @package	CodeIgniter
-* @subpackage	Sparks
-* @category    	Videos
-* @author 	Alexandru Budurovici (@w0rldart)
-* @copyright	Copyright (C) 2012 by Budurovici Alexandru
-* @license	http://www.opensource.org/licenses/mit-license.php
-*
-*/
+ *
+ * CodeIgniter Metacafe
+ * Search and retrieve video content from Metacafe.
+ *
+ *
+ * @package     CodeIgniter
+ * @subpackage  Sparks
+ * @category    Videos
+ * @author      Alexandru Budurovici (@w0rldart)
+ * @copyright   Copyright (C) 2012 by Budurovici Alexandru
+ * @license     http://www.opensource.org/licenses/mit-license.php
+ *
+ */
 
 class Metacafe
 {
     const URI_BASE = 'http://www.metacafe.com/';
 
-    private $_uris = array(
+    private $uris = array(
         //Today’s highest rated videos, movies & funny clips by Metacafe.
-        'TODAYS_TOP_RATED_VIDEOS'           => 'rss.xml',
+        'TODAYS_TOP_RATED_VIDEOS'       => 'rss.xml',
 
         //Today’s recently popular videos, movies & funny clips by Metacafe.
-        'TODAYS_RECENTLY_POPULAR'           => 'recently_popular/rss.xml',
+        'TODAYS_RECENTLY_POPULAR'       => 'recently_popular/rss.xml',
 
         //Today’s most discussed videos, movies & funny clips by Metacafe.
-        'TODAYS_MOST_DISCUSSED'             => 'most_interesting/rss.xml',
+        'TODAYS_MOST_DISCUSSED'         => 'most_interesting/rss.xml',
 
         //Today’s most viewed videos, movies & funny clips by Metacafe.
-        'TODAYS_MOST_VIEWED'                => 'most_popular/rss.xml',
+        'TODAYS_MOST_VIEWED'            => 'most_popular/rss.xml',
 
         //Today’s most recent videos, movies & funny clips by Metacafe.
-        'TODAYS_MOST_RECENT'                => 'newest/rss.xml',
+        'TODAYS_MOST_RECENT'            => 'newest/rss.xml',
 
         //Highest rated videos, movies & funny clips by Metacafe this week/this month/ever.
         'VIDEOS_WEEK'                   => 'videos/rss.xml',
@@ -59,7 +62,7 @@ class Metacafe
         //Most Recent videos, movies & funny clips by Metacafe this week/this month/ever.
         'VIDEOS_MOST_RECENT_WEEK'       => 'videos/newest/rss.xml',
         'VIDEOS_MOST_RECENT_MONTH'      => 'videos/newest/month/rss.xml',
-        'VIDEOS_MOST_RECENT_EVER'       => 'videos/newest/ever/rss.xml'
+        'VIDEOS_MOST_RECENT_EVER'       => 'videos/newest/ever/rss.xml',
     );
 
     /**
@@ -69,114 +72,124 @@ class Metacafe
      * @param array $params additional parameters to pass
      * @return the xml response from metacafe.
      **/
-    private function _response_request($uri, $params = array())
+    private function getContent($uri, $params = array())
     {
-        if( ! empty($params))
-            $uri .= '?'.http_build_query($params);
+        if (!empty($params)) {
+            $uri .= '?' . http_build_query($params);
+        }
 
-        $url = self::URI_BASE.substr($uri, 1);
+        $url = self::URI_BASE . $uri;
+        $data = $this->curlGet($url);
 
-        $data = $this->_curl_get($url);
-        if($data)
-            return $data;
-        else
-        	return false;
+        if (!$data) {
+            $data = false;
+        }
+
+        return $data;
     }
 
     public function getTopRatedVideoFeed($period = 'ever')
     {
-        switch($period) {
+        switch ($period) {
             case 'today':
-                return $this->_response_request("/{$this->_uris['TODAYS_TOP_RATED_VIDEOS']}");
+                return $this->getContent("/{$this->uris['TODAYS_TOP_RATED_VIDEOS']}");
                 break;
             case 'week':
-                return $this->_response_request("/{$this->_uris['VIDEOS_WEEK']}");
+                return $this->getContent("/{$this->uris['VIDEOS_WEEK']}");
                 break;
             case 'month':
-                return $this->_response_request("/{$this->_uris['VIDEOS_MONTH']}");
+                return $this->getContent("/{$this->uris['VIDEOS_MONTH']}");
                 break;
             case 'ever':
-                return $this->_response_request("/{$this->_uris['VIDEOS_EVER']}");
+                return $this->getContent("/{$this->uris['VIDEOS_EVER']}");
                 break;
         }
     }
-    
+
     public function getMostViewedVideoFeed($period = 'ever')
     {
-        switch($period) {
+        switch ($period) {
             case 'today':
-                return $this->_response_request("/{$this->_uris['TODAYS_MOST_VIEWED']}");
+                return $this->getContent("/{$this->uris['TODAYS_MOST_VIEWED']}");
                 break;
             case 'week':
-                return $this->_response_request("/{$this->_uris['VIDEOS_MOST_VIEWED_WEEK']}");
+                return $this->getContent("/{$this->uris['VIDEOS_MOST_VIEWED_WEEK']}");
                 break;
             case 'month':
-                return $this->_response_request("/{$this->_uris['VIDEOS_MOST_VIEWED_MONTH']}");
+                return $this->getContent("/{$this->uris['VIDEOS_MOST_VIEWED_MONTH']}");
                 break;
             case 'ever':
-                return $this->_response_request("/{$this->_uris['VIDEOS_MOST_VIEWED_EVER']}");
+                return $this->getContent("/{$this->uris['VIDEOS_MOST_VIEWED_EVER']}");
                 break;
         }
     }
-    
+
     public function getMostDiscussedVideoFeed($period = 'ever')
     {
-        switch($period) {
+        switch ($period) {
             case 'today':
-                return $this->_response_request("/{$this->_uris['TODAYS_MOST_DISCUSSED']}");
+                return $this->getContent("/{$this->uris['TODAYS_MOST_DISCUSSED']}");
                 break;
             case 'week':
-                return $this->_response_request("/{$this->_uris['VIDEOS_MOST_DISCUSSED_WEEK']}");
+                return $this->getContent("/{$this->uris['VIDEOS_MOST_DISCUSSED_WEEK']}");
                 break;
             case 'month':
-                return $this->_response_request("/{$this->_uris['VIDEOS_MOST_DISCUSSED_MONTH']}");
+                return $this->getContent("/{$this->uris['VIDEOS_MOST_DISCUSSED_MONTH']}");
                 break;
             case 'ever':
-                return $this->_response_request("/{$this->_uris['VIDEOS_MOST_DISCUSSED_EVER']}");
+                return $this->getContent("/{$this->uris['VIDEOS_MOST_DISCUSSED_EVER']}");
                 break;
         }
     }
-    
+
     public function getMostRecentVideoFeed()
     {
-        return $this->_response_request("/{$this->_uris['TODAYS_MOST_RECENT']}");
+        return $this->getContent("/{$this->uris['TODAYS_MOST_RECENT']}");
     }
 
     public function getKeywordVideoFeed($keywords, array $params = array())
     {
+        $commonParams = [
+            'start-index' => 1,
+            'max-results' => 10,
+            'time' => 'all_time'
+        ];
+
         $params['vq'] = str_replace(' ', '+', $keywords);
-        return $this->_response_request("/api/videos/", array_merge(array('start-index'=>1, 'max-results'=>10, 'time' => 'all_time'), $params));
+        $params = array_merge($commonParams, $params);
+
+        return $this->getContent("/api/videos/", $params);
     }
 
     public function getTagVideosFeed($tag)
     {
-        return $this->_response_request("/tags/".str_replace(' ', '+',mb_strtolower($tag))."/rss.xml");
+        return $this->getContent("/tags/" . str_replace(' ', '+', mb_strtolower($tag)) . "/rss.xml");
     }
 
     public function getItemData($id)
     {
-        return $this->_response_request("/api/item/$id/");
+        return $this->getContent("/api/item/$id/");
     }
 
     public function getRelatedVideos($id)
     {
         $id = explode('/', $id);
-        return $this->_response_request("/api/$id[0]/related");
+        return $this->getContent("/api/$id[0]/related");
     }
 
     public function getEmbedData($id)
     {
-        $url = "http://www.metacafe.com/fplayer/".$id.".swf";
-        $data = curl_get($url);
-        
-        if($data == "Video does not exist") {
-            return $result = '<span style="width: 640px; height: 330px; display: block; margin: 15px auto;"><a id="loadFrame" style="position: relative; top: 165px;" href="http://www.metacafe.com/watch/'.$id.'/">Click to load the video</a></span>';
+        $url = "http://www.metacafe.com/fplayer/" . $id . ".swf";
+        $data = $this->curlGet($url);
+
+        if ($data == "Video does not exist") {
+            return $result = '<span style="width: 640px; height: 330px; display: block; margin: 15px auto;"><a id="loadFrame" style="position: relative; top: 165px;" href="http://www.metacafe.com/watch/' . $id . '/">Click to load the video</a></span>';
         } else {
             return $result = $url;
         }
     }
-    
-    private function _curl_get($url)
+
+    private function curlGet($url)
     {
         // Initiate the curl session
         $ch = curl_init();
@@ -186,7 +199,7 @@ class Metacafe
 
         // Removes the headers from the output
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        
+
         #curl_setopt($ch, CURLOPT_VERBOSE, true);
 
         // Return the output instead of displaying it directly
