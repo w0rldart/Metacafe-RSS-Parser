@@ -182,11 +182,13 @@ class Metacafe
         $url = "http://www.metacafe.com/fplayer/" . $id . ".swf";
         $data = $this->curlGet($url);
 
+        $result = $url;
+
         if ($data == "Video does not exist") {
-            return $result = '<span style="width: 640px; height: 330px; display: block; margin: 15px auto;"><a id="loadFrame" style="position: relative; top: 165px;" href="http://www.metacafe.com/watch/' . $id . '/">Click to load the video</a></span>';
-        } else {
-            return $result = $url;
+            $result = '<span style="width: 640px; height: 330px; display: block; margin: 15px auto;"><a id="loadFrame" style="position: relative; top: 165px;" href="http://www.metacafe.com/watch/' . $id . '/">Click to load the video</a></span>';
         }
+        
+        return $result;
     }
 
     private function curlGet($url)
